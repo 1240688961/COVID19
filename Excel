@@ -1,0 +1,60 @@
+Sub Color()
+Dim 行 As Integer
+Dim 指定列 As Integer
+Dim 单元格字符数 As Integer
+Dim 单字符位置 As Integer
+Dim 单个字符颜色 As String
+Dim 单字符 As String
+Dim 第几行开始 As Integer
+Dim 第几行结束 As Integer
+Dim 第几列开始 As Integer
+Dim 第几列结束 As Integer
+
+
+第几列开始 = 2
+第几列结束 = 14
+
+
+第几行开始 = 2
+第几行结束 = 995
+
+
+For 指定列 = 第几列开始 To 第几列结束
+
+For 行 = 第几行开始 To 第几行结束
+
+
+Cells(行, 指定列).NumberFormatLocal = "@"          'Format cells as text
+
+单元格字符数 = Len(Cells(行, 指定列))             'Get the number of characters in a cell
+
+For 单字符位置 = 1 To 单元格字符数                     'Cycle through characters to determine whether they meet
+
+    单字符 = Mid(Cells(行, 指定列), 单字符位置, 1)         'Get this single character
+    
+    单个字符颜色 = Cells(行, 指定列).Characters(单字符位置, 1).Font.ColorIndex     'Get the color of a single character
+    
+    If 单个字符颜色 = -4105 Then       'If the character is black (color number is -4105)
+    
+        新的字符串 = 新的字符串 & 单字符   'Join the required characters
+    
+    End If                   'End judgment
+
+    
+Next 单字符位置
+
+Cells(行, 指定列) = 新的字符串            'Write the new string to the table
+Cells(行, 指定列).Font.Size = 8
+Cells(行, 指定列).Font.ColorIndex = 1
+
+新的字符串 = ""  'Empty the new string
+
+Next 行
+
+Next 指定列
+
+
+End Sub
+
+
+
